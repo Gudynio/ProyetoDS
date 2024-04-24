@@ -1,20 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Personaje: MonoBehaviour
 {
     [SerializeField] private float velocidad;
+    [SerializeField] private BoxCollider2D colEspada;
 
     private Rigidbody2D rig;
     private Animator anim;
     private SpriteRenderer spritePersonaje;
+    private float posColX = 1;
+    private float posColY = 0;
 
     private void Awake()
     {
         rig = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
         spritePersonaje = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            anim.SetTrigger("Atacar");
+        }
     }
 
     private void FixedUpdate()
@@ -32,10 +44,13 @@ public class Personaje: MonoBehaviour
 
         if (horizontal > 0)
         {
+            colEspada.offset = new Vector2(1, posColY);
             spritePersonaje.flipX = false;
+
         }
         else if (horizontal < 0)
         {
+            colEspada.offset = new Vector2(-1, posColY);
             spritePersonaje.flipX = true;
         }
 
