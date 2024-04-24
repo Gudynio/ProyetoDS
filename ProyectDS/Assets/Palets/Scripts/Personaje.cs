@@ -11,8 +11,15 @@ public class Personaje: MonoBehaviour
     private Rigidbody2D rig;
     private Animator anim;
     private SpriteRenderer spritePersonaje;
+
+    private int vidaPersonaje = 3;
+
+    [SerializeField] UIManager uiManager;
+
+
     private float posColX = 1;
     private float posColY = 0;
+    
 
     private void Awake()
     {
@@ -26,6 +33,10 @@ public class Personaje: MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             anim.SetTrigger("Atacar");
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CausarHerida();
         }
     }
 
@@ -54,5 +65,26 @@ public class Personaje: MonoBehaviour
             spritePersonaje.flipX = true;
         }
 
+    }
+
+    private void CausarHerida()
+    {
+        if (vidaPersonaje > 0)
+        {
+            vidaPersonaje--;
+            uiManager.RestaCorazones(vidaPersonaje);
+            if (vidaPersonaje == 0)
+            {
+                anim.SetTrigger("Muere");
+                Invoke(nameof(Morir),1f);
+                Debug.Log("Muerto");
+
+            }
+        }
+    }
+
+    private void Morir()
+    {
+        Destroy(this.gameObject);
     }
 }
