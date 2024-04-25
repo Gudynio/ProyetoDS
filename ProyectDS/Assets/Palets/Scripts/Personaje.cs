@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class Personaje: MonoBehaviour
 {
@@ -77,7 +78,7 @@ public class Personaje: MonoBehaviour
             {
                 anim.SetTrigger("Muere");
                 Invoke(nameof(Morir),1f);
-                Debug.Log("Muerto");
+                SceneManager.LoadScene("GameOver");
 
             }
         }

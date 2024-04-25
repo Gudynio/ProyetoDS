@@ -17,6 +17,7 @@ public class Credito : MonoBehaviour
             {
                 sumarCredito();
                 Destroy(this.gameObject);
+                
             }
 
         }

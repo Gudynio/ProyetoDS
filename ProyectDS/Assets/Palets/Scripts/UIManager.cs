@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -20,6 +21,11 @@ public class UIManager : MonoBehaviour
     {
         totalCreditos += credito;
         textoCreditos.text = totalCreditos.ToString();
+        if (totalCreditos > 442)
+        {
+            totalCreditos = 0;
+            SceneManager.LoadScene("GameOver");
+        }
     }
 
     public void RestaCorazones(int indice)
