@@ -55,19 +55,19 @@ public class Personaje: MonoBehaviour
 
         if (horizontal > 0)
         {
-            colEspada.offset = new Vector2(1, posColY);
+            colEspada.offset = new Vector2(posColX, posColY);
             spritePersonaje.flipX = false;
 
         }
         else if (horizontal < 0)
         {
-            colEspada.offset = new Vector2(-1, posColY);
+            colEspada.offset = new Vector2(-posColX, posColY);
             spritePersonaje.flipX = true;
         }
 
     }
 
-    private void CausarHerida()
+    public void CausarHerida()
     {
         if (vidaPersonaje > 0)
         {
