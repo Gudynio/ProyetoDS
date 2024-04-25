@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Controla el movimiento y comportamiento de un enemigo en el juego.
+/// </summary>
 public class EnemigoMovimiento : MonoBehaviour
 {
     public Transform personaje;
-    public Transform [] puntosRuta;
+    public Transform[] puntosRuta;
     private int indiceRuta;
     public NavMeshAgent agente;
     private bool objetivoDetectado;
@@ -31,31 +34,34 @@ public class EnemigoMovimiento : MonoBehaviour
 
     private void Update()
     {
-        this.transform.position = new Vector3(transform.position.x, transform.position.y,0);
-        float distancia  = Vector3.Distance(personaje.position, this.transform.position);
+        this.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+        float distancia = Vector3.Distance(personaje.position, this.transform.position);
         if (Vector3.Distance(this.transform.position, puntosRuta[indiceRuta].position) < 0.1f)
         {
             if (indiceRuta < puntosRuta.Length - 1)
             {
                 indiceRuta++;
             }
-            else if(indiceRuta == puntosRuta.Length - 1)
+            else if (indiceRuta == puntosRuta.Length - 1)
             {
                 indiceRuta = 0;
             }
         }
 
-        if (distancia < 3) {
+        if (distancia < 3)
+        {
             objetivoDetectado = true;
         }
-
-
 
         MovimientoEnemigo(objetivoDetectado);
         RotarEnemigo();
     }
 
-    void MovimientoEnemigo (bool esDetectado)
+    /// <summary>
+    /// Controla el movimiento del enemigo hacia el objetivo detectado o los puntos de la ruta.
+    /// </summary>
+    /// <param name="esDetectado">Indica si el enemigo ha detectado al jugador.</param>
+    void MovimientoEnemigo(bool esDetectado)
     {
         if (esDetectado)
         {
@@ -67,26 +73,27 @@ public class EnemigoMovimiento : MonoBehaviour
             agente.SetDestination(puntosRuta[indiceRuta].position);
             objetivo = puntosRuta[indiceRuta];
         }
-
     }
 
+    /// <summary>
+    /// Rota al enemigo para que mire hacia su objetivo.
+    /// </summary>
     void RotarEnemigo()
     {
-        if(this.transform.position.x > objetivo.position.x)
+        if (this.transform.position.x > objetivo.position.x)
         {
-            //transform.localScale = new Vector2(-1, 1);
             sprite.flipX = true;
         }
         else
         {
-            //transform.localScale = new Vector2(1, 1);
             sprite.flipX = false;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player")) {
+        if (collision.gameObject.CompareTag("Player"))
+        {
             anim.SetTrigger("Ataca");
         }
     }

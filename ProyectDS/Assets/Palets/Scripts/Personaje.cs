@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
-public class Personaje: MonoBehaviour
+/// <summary>
+/// Controla el comportamiento del personaje jugador.
+/// </summary>
+public class Personaje : MonoBehaviour
 {
     [SerializeField] private float velocidad;
     [SerializeField] private BoxCollider2D colEspada;
@@ -17,10 +20,8 @@ public class Personaje: MonoBehaviour
 
     [SerializeField] UIManager uiManager;
 
-
     private float posColX = 1;
     private float posColY = 0;
-    
 
     private void Awake()
     {
@@ -68,6 +69,9 @@ public class Personaje: MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Reduce la vida del personaje y actualiza la interfaz de usuario.
+    /// </summary>
     public void CausarHerida()
     {
         if (vidaPersonaje > 0)
@@ -76,14 +80,17 @@ public class Personaje: MonoBehaviour
             uiManager.RestaCorazones(vidaPersonaje);
             if (vidaPersonaje == 0)
             {
+                // Inicia la animación de muerte y carga la escena de "GameOver" después de un breve retraso
                 anim.SetTrigger("Muere");
-                Invoke(nameof(Morir),1f);
+                Invoke(nameof(Morir), 1f);
                 SceneManager.LoadScene("GameOver");
-
             }
         }
     }
 
+    /// <summary>
+    /// Destruye el objeto del personaje.
+    /// </summary>
     private void Morir()
     {
         Destroy(this.gameObject);
